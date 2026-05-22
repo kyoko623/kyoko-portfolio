@@ -132,7 +132,7 @@ No accent color. No shadows, gradients, rounded corners. Visual hierarchy comes 
 - Header strip: `① Works · Index | N / N`
 - One large cover image per film (16:9), 1 column
 - Below each cover: centered title (56px), centered meta (`year · duration · View →`)
-- Hover: cover dims slightly (no full invert here — image is the focus)
+- Hover: the entire card inverts — background becomes `#F5F5F5`, title and meta text become `#000000`. The cover image itself stays normal (the inversion is the surrounding card chrome). Transition ≤ 200ms.
 
 **About section (`#info`):**
 - Centered `About.` headline (72px)
