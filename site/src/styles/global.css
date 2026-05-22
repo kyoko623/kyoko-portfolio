@@ -1,0 +1,57 @@
+/* Load Inter Tight variable font (all weights from 100 to 900) */
+@import '@fontsource-variable/inter-tight/index.css';
+
+/* Reset */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* Tokens */
+:root {
+  --bg: #000000;
+  --text: #f5f5f5;
+  --muted: #888888;
+  --divider: #f5f5f5;
+
+  --pad-x: 24px;
+  --pad-x-mobile: 16px;
+  --max-content: 60ch;
+}
+
+/* Base */
+html { background: var(--bg); }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter Tight Variable', 'Inter Tight', -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  font-feature-settings: 'ss01' on, 'cv11' on;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+a:hover { background: var(--text); color: var(--bg); text-decoration: none; }
+
+img, svg, video { max-width: 100%; height: auto; display: block; }
+
+button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
+
+/* Type roles */
+.h-display { font-weight: 900; line-height: 0.9; letter-spacing: -0.04em; }
+.h-section { font-weight: 900; line-height: 0.95; letter-spacing: -0.04em; }
+.h-card    { font-weight: 800; line-height: 0.95; letter-spacing: -0.03em; }
+.meta      { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); }
+.meta-light { color: var(--text); }
+
+/* Layout helpers */
+.page-pad { padding-left: var(--pad-x); padding-right: var(--pad-x); }
+.divider-top    { border-top: 1px solid var(--divider); }
+.divider-bottom { border-bottom: 1px solid var(--divider); }
+.center { text-align: center; }
+.measure { max-width: var(--max-content); margin-left: auto; margin-right: auto; }
+
+/* Focus */
+:focus-visible { outline: 2px solid var(--text); outline-offset: 4px; }
+
+@media (max-width: 640px) {
+  :root { --pad-x: var(--pad-x-mobile); }
+}
