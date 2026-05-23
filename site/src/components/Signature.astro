@@ -1,0 +1,55 @@
+---
+/**
+ * Renders one of the owner's handwritten signatures as inline SVG.
+ *
+ * The SVG files use `fill="currentColor"` so the signature inherits the
+ * surrounding text color — black on light backgrounds, white on the dark
+ * theme.
+ *
+ * Sizes map to typical usage:
+ *  - xl  → Index Hero (max-width 80% of viewport)
+ *  - lg  → Film Detail director sign-off (~72px tall)
+ *  - md  → Index About sign-off (~80px tall)
+ *  - sm  → Footer (~24px tall)
+ */
+import blockSvg from '../assets/signatures/block.svg?raw';
+import cursiveSvg from '../assets/signatures/cursive.svg?raw';
+
+type Variant = 'block' | 'cursive';
+type Size = 'sm' | 'md' | 'lg' | 'xl';
+
+interface Props {
+  variant: Variant;
+  size?: Size;
+  class?: string;
+}
+
+const { variant, size = 'md', class: className = '' } = Astro.props;
+const raw = variant === 'block' ? blockSvg : cursiveSvg;
+---
+
+<span
+  class:list={['signature', `signature--${variant}`, `signature--${size}`, className]}
+  set:html={raw}
+/>
+
+<style>
+  .signature {
+    display: inline-block;
+    line-height: 0;
+    color: var(--text);
+  }
+  .signature :global(svg) {
+    width: auto;
+    height: 100%;
+  }
+
+  /* Block (hero) — sized by container width, not by .signature height */
+  .signature--block { display: block; width: 100%; }
+  .signature--block :global(svg) { width: 100%; height: auto; max-width: 80vw; margin-inline: auto; }
+
+  /* Cursive sizes */
+  .signature--sm :global(svg) { height: 24px; }
+  .signature--md :global(svg) { height: 56px; }
+  .signature--lg :global(svg) { height: 72px; }
+</style>
