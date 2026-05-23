@@ -1,5 +1,5 @@
 ---
-import { getCollection, getEntry, render } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import { Image } from 'astro:assets';
 import BaseLayout from '../components/BaseLayout.astro';
 import Header from '../components/Header.astro';
@@ -13,7 +13,10 @@ const allFilms = await getCollection('films');
 const films = sortFilms(filterPublished(allFilms));
 const firstFilm = films[0];
 
-const aboutEntry = await getEntry('site', 'about');
+// Astro 6 + legacy.collectionsBackwardsCompat exposes ids with the file
+// extension (e.g. 'about.mdx'); look up by the bare slug across both forms.
+const siteEntries = await getCollection('site');
+const aboutEntry = siteEntries.find((e) => e.id.replace(/\.[^.]+$/, '') === 'about');
 if (!aboutEntry) throw new Error('site/about content entry not found');
 const { Content: AboutContent } = await render(aboutEntry);
 ---
