@@ -1,0 +1,47 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  image: ImageMetadata;
+  caption?: string;
+  number?: number;
+}
+
+const { image, caption, number } = Astro.props;
+---
+
+<figure class="frame">
+  {number !== undefined && <span class="frame-num meta meta-light">{String(number).padStart(2, '0')}</span>}
+  <Image src={image} alt={caption ?? `Storyboard frame ${number ?? ''}`} widths={[480, 960]} sizes="(min-width: 1024px) 33vw, 50vw" />
+  {caption && <figcaption class="caption">{caption}</figcaption>}
+</figure>
+
+<style>
+  .frame {
+    aspect-ratio: 16 / 9;
+    position: relative;
+    overflow: hidden;
+    background: #1a1a1a;
+  }
+  .frame :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .frame-num {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    color: var(--text);
+    z-index: 1;
+  }
+  .caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--text);
+    color: var(--bg);
+    padding: 8px 12px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+</style>

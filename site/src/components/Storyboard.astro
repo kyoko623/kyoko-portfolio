@@ -1,0 +1,23 @@
+---
+/* Wraps a set of <Frame> children in a 3-column grid. */
+---
+
+<div class="storyboard-grid page-pad">
+  <slot />
+</div>
+
+<style>
+  .storyboard-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    padding-top: 32px;
+    padding-bottom: 32px;
+  }
+  @media (max-width: 1024px) {
+    .storyboard-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .storyboard-grid { grid-template-columns: 1fr; }
+  }
+</style>
