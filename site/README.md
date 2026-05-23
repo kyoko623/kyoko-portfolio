@@ -34,7 +34,7 @@ For each film at `src/content/films/<slug>.mdx`, drop real images into the
 sibling `<slug>/assets/` directory at the paths the MDX references. Keep
 filenames identical to what is already there (the MDX imports them by name).
 
-**`memory-of-a-light/assets/`** — 13 images:
+**`zutomayo/assets/`** — 13 images:
 
 | Slot | Path | Used for | Suggested size |
 |---|---|---|---|
@@ -45,7 +45,7 @@ filenames identical to what is already there (the MDX imports them by name).
 | Workflow | `workflow/01.png`, `02.png` | TapNow screenshots | as captured |
 | Discarded | `discarded/01.jpg`, `02.jpg` | 废案 frames (faded grid) | 1280 × 720 each |
 
-**`untitled-02/assets/`** — 7 images: same shape, scale to your film's needs.
+**`the-greatest/assets/`** — 7 images: same shape, scale to your film's needs.
 
 After dropping files, run `npm run build` — Astro will optimize them into
 WebP at multiple resolutions and validate every path in the Zod schema.
@@ -129,9 +129,9 @@ Push to GitHub. In Cloudflare Pages dashboard:
 - Connect the repo `kyoko623/kyoko-portfolio`
 - Production branch: `main`
 - Framework preset: `Astro`
-- Build command: `cd site && npm run build`
-- Build output directory: `site/dist`
-- Root directory: (leave empty)
+- **Root directory: `site`** (this is the key field — package.json lives here)
+- Build command: `npm run build`
+- Build output directory: `dist`
 
 Cloudflare Pages will auto-deploy on every push to `main`.
 
