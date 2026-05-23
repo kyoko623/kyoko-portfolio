@@ -1,0 +1,154 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseLayout from '../../components/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Signature from '../../components/Signature.astro';
+import SectionAnchor from '../../components/SectionAnchor.astro';
+import WorkflowGallery from '../../components/WorkflowGallery.astro';
+import VimeoEmbed from '../../components/VimeoEmbed.astro';
+import { sortFilms, filterPublished, slugOf } from '../../lib/films';
+import { SITE_META } from '../../content/site/meta';
+
+export async function getStaticPaths() {
+  const all = await getCollection('films');
+  const published = filterPublished(all);
+  return published.map((film) => ({
+    params: { slug: slugOf(film) },
+    props: { film, all: published },
+  }));
+}
+
+interface Props {
+  film: CollectionEntry<'films'>;
+  all: CollectionEntry<'films'>[];
+}
+
+const { film, all } = Astro.props;
+const { Content } = await render(film);
+const sorted = sortFilms(all);
+const currentSlug = slugOf(film);
+const currentIndex = sorted.findIndex((f) => slugOf(f) === currentSlug);
+const nextFilm = sorted[(currentIndex + 1) % sorted.length];
+
+const pageTitle = `${film.data.title} — ${SITE_META.ownerName}`;
+const pageDescription = film.data.tagline;
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  canonicalPath={`/films/${currentSlug}/`}
+>
+  <Header leftLabel="← All Works" leftHref="/#works" infoHref="/#info" />
+
+  {/* HERO */}
+  <section class="film-hero divider-bottom page-pad">
+    <div class="meta-line meta">{film.data.year} · {film.data.duration} · AIGC Short Film</div>
+    <h1 class="h-display title">{film.data.title}</h1>
+    <p class="tagline">{film.data.tagline}</p>
+    {film.data.heroImage && (
+      <div class="hero-image">
+        <span class="m tl"></span><span class="m tr"></span>
+        <span class="m bl"></span><span class="m br"></span>
+        <Image src={film.data.heroImage} alt={`${film.data.title} — hero still`} widths={[1280, 1920, 2560]} sizes="100vw" />
+      </div>
+    )}
+  </section>
+
+  {/* MDX BODY — Core / Characters / Storyboard headings rendered through the MDX content */}
+  <article class="film-body">
+    <SectionAnchor label="① Core" anchor="#core" />
+    <Content />
+  </article>
+
+  {/* WORKFLOW */}
+  <SectionAnchor label="④ Workflow" anchor="#workflow" />
+  <section id="workflow" class="workflow-section divider-bottom">
+    <h2 class="h-section stitle">Workflow.</h2>
+    <WorkflowGallery screenshots={film.data.tapnow.screenshots} link={film.data.tapnow.link} />
+  </section>
+
+  {/* WATCH */}
+  <SectionAnchor label="⑤ Watch" anchor="#video" />
+  <section id="video" class="watch-section divider-bottom">
+    <h2 class="h-section stitle">Watch.</h2>
+    <VimeoEmbed vimeoId={film.data.vimeoId} vimeoHash={film.data.vimeoHash} title={film.data.title} />
+  </section>
+
+  {/* DIRECTOR sign-off */}
+  <section class="director divider-bottom page-pad">
+    <div class="em-dash meta">— Directed by</div>
+    <Signature variant="cursive" size="lg" />
+  </section>
+
+  {/* NEXT FILM */}
+  {sorted.length > 1 && slugOf(nextFilm) !== currentSlug && (
+    <section class="next-film page-pad">
+      <a href={`/films/${slugOf(nextFilm)}/`}>
+        <div class="meta next-label">Next →</div>
+        <div class="next-title h-section">{nextFilm.data.title}</div>
+      </a>
+    </section>
+  )}
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .film-hero { text-align: center; padding-top: 48px; padding-bottom: 32px; }
+  .meta-line { margin-bottom: 16px; display: block; }
+  .title { font-size: clamp(56px, 12vw, 160px); margin-bottom: 16px; }
+  .tagline { font-size: clamp(15px, 2vw, 18px); font-style: italic; color: #ccc; max-width: 50ch; margin: 0 auto; }
+  .hero-image {
+    margin-top: 32px;
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+  }
+  .hero-image :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .hero-image .m { position: absolute; width: 8px; height: 8px; background: var(--text); }
+  .hero-image .tl { top: 8px; left: 8px; }
+  .hero-image .tr { top: 8px; right: 8px; }
+  .hero-image .bl { bottom: 8px; left: 8px; }
+  .hero-image .br { bottom: 8px; right: 8px; }
+
+  .stitle { text-align: center; font-size: clamp(40px, 7vw, 56px); margin: 32px 0; }
+
+  /* MDX content styles */
+  .film-body :global(h2) {
+    text-align: center;
+    font-size: clamp(40px, 7vw, 56px);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+    margin: 48px 0 32px;
+  }
+  .film-body :global(p) {
+    max-width: var(--max-content);
+    margin: 0 auto 16px;
+    padding: 0 var(--pad-x);
+    font-size: 17px;
+    line-height: 1.7;
+  }
+  .film-body :global(blockquote) {
+    max-width: var(--max-content);
+    margin: 24px auto;
+    padding: 0 var(--pad-x);
+    border-left: 2px solid var(--text);
+    padding-left: 24px;
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.4;
+  }
+
+  .director { text-align: center; padding-top: 64px; padding-bottom: 64px; }
+  .em-dash { margin-bottom: 12px; }
+
+  .next-film { padding-top: 32px; padding-bottom: 32px; text-align: center; }
+  .next-film a { display: block; text-decoration: none; color: var(--text); }
+  .next-film a:hover { color: var(--muted); background: transparent; }
+  .next-label { margin-bottom: 8px; }
+  .next-title { font-size: clamp(36px, 6vw, 48px); }
+</style>
