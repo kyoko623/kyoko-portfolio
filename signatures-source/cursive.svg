@@ -1,8 +1,14 @@
-<svg aria-label="Yifan signature" role="img" version="1.0" xmlns="http://www.w3.org/2000/svg"
- width="1303.574219" height="513.223630" viewBox="0 0 1303.574219 513.223630"
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
+ "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+ width="1303.574219pt" height="513.223630pt" viewBox="0 0 1303.574219 513.223630"
  preserveAspectRatio="xMidYMid meet">
+<metadata>
+Created by potrace 1.16, written by Peter Selinger 2001-2019
+</metadata>
 <g transform="translate(-459.000000,617.857848) scale(0.100000,-0.100000)"
-fill="currentColor" stroke="none">
+fill="#000000" stroke="none">
 <path d="M10161 6149 c-104 -52 -247 -208 -410 -449 -234 -343 -468 -808 -791
 -1565 -40 -93 -74 -172 -75 -173 -8 -8 -188 94 -269 152 -125 90 -216 171
 -335 299 -303 327 -543 690 -656 992 -50 135 -59 150 -99 169 -45 21 -84 20
