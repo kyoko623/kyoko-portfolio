@@ -1,0 +1,30 @@
+---
+import Signature from './Signature.astro';
+import { SITE_META } from '../content/site/meta';
+---
+
+<footer class="site-footer divider-top page-pad">
+  <span>© {SITE_META.ownerName} · {SITE_META.copyrightYear}</span>
+  <span class="sig"><Signature variant="cursive" size="sm" /></span>
+  <span>Built with Astro</span>
+</footer>
+
+<style>
+  .site-footer {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding-top: 24px;
+    padding-bottom: 24px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  .sig { text-align: center; color: var(--text); }
+  .site-footer span:last-child { text-align: right; }
+  @media (max-width: 640px) {
+    .site-footer { grid-template-columns: 1fr; gap: 12px; text-align: center; }
+    .site-footer span:last-child { text-align: center; }
+  }
+</style>

@@ -1,0 +1,28 @@
+---
+interface Props {
+  /** Section number + name, e.g. "① Core" */
+  label: string;
+  /** Anchor hash like "#core" */
+  anchor: string;
+}
+
+const { label, anchor } = Astro.props;
+---
+
+<div class="section-anchor divider-bottom page-pad">
+  <span>{label}</span>
+  <span>{anchor}</span>
+</div>
+
+<style>
+  .section-anchor {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+</style>
