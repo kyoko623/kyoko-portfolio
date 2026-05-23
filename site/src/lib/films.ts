@@ -1,6 +1,9 @@
-import type { CollectionEntry } from 'astro:content';
-
-type FilmLike = Pick<CollectionEntry<'films'>, 'data'> & { data: { order: number; draft: boolean } };
+/**
+ * Minimal structural type — accepts any object with a `data.order` and `data.draft`.
+ * Callers using the full Astro `CollectionEntry<'films'>` type satisfy this trivially
+ * via TypeScript's structural typing; tests use a small stand-in object.
+ */
+type FilmLike = { data: { order: number; draft: boolean } };
 
 /**
  * Returns a new array of films sorted by `order` ascending (does not mutate input).
