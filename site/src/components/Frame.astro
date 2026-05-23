@@ -19,10 +19,10 @@ const { image, caption, number } = Astro.props;
 
 <style>
   .frame {
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 21 / 9;
     position: relative;
     overflow: hidden;
-    background: #1a1a1a;
+    background: var(--bg);
   }
   .frame :global(img) { width: 100%; height: 100%; object-fit: contain; }
   .frame-num {
