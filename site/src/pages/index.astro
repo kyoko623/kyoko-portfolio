@@ -1,17 +1,170 @@
 ---
+import { getCollection, getEntry, render } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseLayout from '../components/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Signature from '../components/Signature.astro';
+import FilmCard from '../components/FilmCard.astro';
+import { SITE_META } from '../content/site/meta';
+import { sortFilms, filterPublished, slugOf } from '../lib/films';
 
+const allFilms = await getCollection('films');
+const films = sortFilms(filterPublished(allFilms));
+const firstFilm = films[0];
+
+const aboutEntry = await getEntry('site', 'about');
+if (!aboutEntry) throw new Error('site/about content entry not found');
+const { Content: AboutContent } = await render(aboutEntry);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title={SITE_META.siteTitle} description={SITE_META.siteDescription} canonicalPath="/">
+  <Header />
+
+  {/* HERO */}
+  <section class="hero page-pad">
+    <div class="hero-big">
+      <Signature variant="block" />
+      <p class="hero-sub meta meta-light">{SITE_META.heroSubLabel}</p>
+    </div>
+
+    {firstFilm && (
+      <div class="hero-peek">
+        <div class="peek-row">
+          <div class="peek-year"><span class="tag-square" aria-hidden="true"></span>{firstFilm.data.year}</div>
+          <div class="peek-label">{firstFilm.data.title}, AIGC Short Film</div>
+          <div class="peek-more"><a href="#works">More →</a></div>
+        </div>
+        <a class="peek-image" href={`/films/${slugOf(firstFilm)}/`}>
+          <span class="m tl"></span><span class="m tr"></span>
+          <span class="m bl"></span><span class="m br"></span>
+          <Image src={firstFilm.data.cover} alt={`${firstFilm.data.title} — peek`} widths={[640, 1280, 1920]} sizes="100vw" />
+        </a>
+      </div>
+    )}
+  </section>
+
+  {/* WORKS */}
+  <section id="works">
+    <div class="section-anchor divider-top divider-bottom page-pad">
+      <span>① Works · Index</span>
+      <span>{String(films.length).padStart(2, '0')} / {String(films.length).padStart(2, '0')}</span>
+    </div>
+    {films.map((film) => <FilmCard film={film} />)}
+  </section>
+
+  {/* ABOUT */}
+  <section id="info" class="about divider-top page-pad">
+    <h2 class="h-section about-title">About.</h2>
+    <div class="measure about-body">
+      <AboutContent />
+      <div class="signoff">
+        <div class="signoff-label meta">— signed,</div>
+        <Signature variant="cursive" size="md" />
+      </div>
+    </div>
+  </section>
+
+  {/* CONTACT */}
+  <section class="contact divider-top page-pad">
+    <h2 class="h-section contact-title">Let's talk.</h2>
+    <ul class="contact-list">
+      <li><a href={`mailto:${SITE_META.contact.email}`}><span>Email</span><span>{SITE_META.contact.email} →</span></a></li>
+      <li><a href={SITE_META.contact.instagramUrl} target="_blank" rel="noreferrer noopener"><span>Instagram</span><span>{SITE_META.contact.instagramHandle} →</span></a></li>
+    </ul>
+  </section>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+  .hero-big {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    padding: 24px 0;
+  }
+  .hero-sub { margin-top: 16px; }
+
+  .hero-peek { padding-top: 24px; }
+  .peek-row {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr 1fr;
+    gap: 16px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 12px;
+  }
+  .peek-year { display: flex; align-items: center; gap: 6px; }
+  .peek-label { text-align: center; color: var(--muted); }
+  .peek-more { text-align: right; }
+  .tag-square { display: inline-block; width: 8px; height: 8px; background: var(--text); }
+
+  .peek-image {
+    display: block;
+    position: relative;
+    aspect-ratio: 16 / 5;       /* shows only top portion */
+    overflow: hidden;
+  }
+  .peek-image :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+  .peek-image .m { position: absolute; width: 8px; height: 8px; background: var(--text); }
+  .peek-image .tl { top: 8px; left: 8px; }
+  .peek-image .tr { top: 8px; right: 8px; }
+  .peek-image .bl { bottom: 8px; left: 8px; }
+  .peek-image .br { bottom: 8px; right: 8px; }
+
+  /* Section anchor reuse */
+  .section-anchor {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+
+  /* About */
+  .about { padding-top: 64px; padding-bottom: 64px; text-align: center; }
+  .about-title { font-size: clamp(48px, 8vw, 72px); margin-bottom: 32px; }
+  .about-body { font-size: 16px; line-height: 1.7; text-align: left; }
+  .about-body :global(p) { margin-bottom: 16px; }
+
+  .signoff { margin-top: 32px; text-align: center; }
+  .signoff-label { display: block; margin-bottom: 4px; }
+
+  /* Contact */
+  .contact { padding-top: 64px; padding-bottom: 64px; text-align: center; }
+  .contact-title { font-size: clamp(48px, 8vw, 72px); margin-bottom: 32px; }
+  .contact-list {
+    list-style: none;
+    border-top: 1px solid var(--divider);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .contact-list li { border-bottom: 1px solid var(--divider); }
+  .contact-list a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 12px;
+    text-decoration: none;
+    font-size: clamp(20px, 3vw, 24px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .contact-list a:hover { background: var(--text); color: var(--bg); }
+</style>
