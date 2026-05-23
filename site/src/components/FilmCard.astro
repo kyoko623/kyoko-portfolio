@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
+import { slugOf } from '../lib/films';
 
 interface Props {
   film: CollectionEntry<'films'>;
@@ -8,7 +9,7 @@ interface Props {
 
 const { film } = Astro.props;
 const { title, year, duration, cover } = film.data;
-const href = `/films/${film.id}/`;
+const href = `/films/${slugOf(film)}/`;
 ---
 
 <a class="film-card divider-bottom" href={href}>

@@ -20,3 +20,14 @@ export function sortFilms<T extends FilmLike>(films: T[]): T[] {
 export function filterPublished<T extends FilmLike>(films: T[]): T[] {
   return films.filter((f) => !f.data.draft);
 }
+
+/**
+ * Returns the URL slug for a film entry. With Astro 6 + the legacy content
+ * collections shim, `film.id` includes the file extension (e.g.
+ * "memory-of-a-light.mdx"); the URL needs the bare name. The legacy
+ * `film.slug` still works at runtime but is missing from the TypeScript
+ * types — this helper avoids both the extension and the type error.
+ */
+export function slugOf(film: { id: string }): string {
+  return film.id.replace(/\.[^.]+$/, '');
+}
