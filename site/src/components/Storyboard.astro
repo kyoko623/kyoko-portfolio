@@ -1,8 +1,19 @@
 ---
-/* Wraps a set of <Frame> children in a 3-column grid. */
+/**
+ * Wraps a set of <Frame> children in a 3-column grid.
+ *
+ * variant="main"      — final storyboard frames (default)
+ * variant="discarded" — 废案 frames; renders with reduced opacity and
+ *                       adds a "废案" label to each frame's top-right
+ */
+interface Props {
+  variant?: 'main' | 'discarded';
+}
+
+const { variant = 'main' } = Astro.props;
 ---
 
-<div class="storyboard-grid page-pad">
+<div class:list={['storyboard-grid page-pad', `storyboard-grid--${variant}`]}>
   <slot />
 </div>
 
@@ -19,5 +30,27 @@
   }
   @media (max-width: 640px) {
     .storyboard-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Discarded variant: fade the frames and stamp 废案 on each one */
+  .storyboard-grid--discarded :global(.frame) {
+    opacity: 0.55;
+    transition: opacity 200ms ease;
+  }
+  .storyboard-grid--discarded :global(.frame:hover) {
+    opacity: 0.9;
+  }
+  .storyboard-grid--discarded :global(.frame)::after {
+    content: '废案';
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 2;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    color: var(--text);
+    padding: 2px 6px;
+    background: rgba(0, 0, 0, 0.7);
   }
 </style>
