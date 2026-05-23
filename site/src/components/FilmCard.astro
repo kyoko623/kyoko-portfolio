@@ -1,0 +1,58 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  film: CollectionEntry<'films'>;
+}
+
+const { film } = Astro.props;
+const { title, year, duration, cover } = film.data;
+const href = `/films/${film.id}/`;
+---
+
+<a class="film-card divider-bottom" href={href}>
+  <div class="cover">
+    <Image src={cover} alt={`${title} — cover`} widths={[640, 1280, 1920]} sizes="(min-width: 1024px) 1100px, 100vw" />
+  </div>
+  <h2 class="h-section title">{title}</h2>
+  <div class="meta">
+    <span>{year}</span>
+    <span class="dot">·</span>
+    <span>{duration}</span>
+    <span class="dot">·</span>
+    <span>View →</span>
+  </div>
+</a>
+
+<style>
+  .film-card {
+    display: block;
+    text-decoration: none;
+    color: var(--text);
+    padding: var(--pad-x);
+    text-align: center;
+    transition: background-color 180ms ease, color 180ms ease;
+  }
+  .film-card:hover {
+    background: var(--text);
+    color: var(--bg);
+    text-decoration: none;
+  }
+  .cover {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .cover :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .title {
+    font-size: clamp(40px, 6vw, 56px);
+    margin-bottom: 12px;
+  }
+  .meta { justify-content: center; display: flex; gap: 8px; }
+  .meta .dot { opacity: 0.5; }
+</style>
