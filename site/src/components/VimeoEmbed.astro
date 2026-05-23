@@ -1,0 +1,45 @@
+---
+interface Props {
+  vimeoId: string;
+  vimeoHash?: string;
+  title?: string;
+}
+
+const { vimeoId, vimeoHash, title = 'Vimeo player' } = Astro.props;
+
+const params = new URLSearchParams({
+  color: 'ffffff',
+  byline: '0',
+  portrait: '0',
+  title: '0',
+  badge: '0',
+  dnt: '1',
+});
+if (vimeoHash) params.set('h', vimeoHash);
+
+const src = `https://player.vimeo.com/video/${encodeURIComponent(vimeoId)}?${params.toString()}`;
+---
+
+<div class="vimeo-wrap page-pad">
+  <div class="vimeo-frame">
+    <iframe
+      src={src}
+      title={title}
+      loading="lazy"
+      allow="autoplay; fullscreen; picture-in-picture"
+      allowfullscreen
+      frameborder="0"
+    ></iframe>
+  </div>
+</div>
+
+<style>
+  .vimeo-wrap { padding-top: 32px; padding-bottom: 32px; }
+  .vimeo-frame {
+    aspect-ratio: 16 / 9;
+    border: 1px solid var(--text);
+    overflow: hidden;
+    background: var(--bg);
+  }
+  .vimeo-frame iframe { width: 100%; height: 100%; border: 0; }
+</style>
