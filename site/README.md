@@ -40,7 +40,7 @@ filenames identical to what is already there (the MDX imports them by name).
 |---|---|---|---|
 | Cover | `cover.jpg` | Index Works grid + Hero peek + OG | 1920 × 1080 |
 | Hero | `hero.jpg` | Film Detail page hero still | 2560 × 1440 |
-| Character | `characters/wanderer.jpg` | Character card portrait | 1440 × 1920 (3:4) |
+| Character | `characters/wanderer.jpg` | Character section image (full-width, natural ratio) | 16:9 film still preferred (e.g. 1920×1080) |
 | Storyboard | `storyboard/01.jpg` … `06.jpg` | Storyboard grid (3 cols) | 1280 × 720 each |
 | Workflow | `workflow/01.png`, `02.png` | TapNow screenshots | as captured |
 | Discarded | `discarded/01.jpg`, `02.jpg` | 废案 frames (faded grid) | 1280 × 720 each |
@@ -49,6 +49,11 @@ filenames identical to what is already there (the MDX imports them by name).
 
 After dropping files, run `npm run build` — Astro will optimize them into
 WebP at multiple resolutions and validate every path in the Zod schema.
+
+**Aspect ratios:** Cover, Hero, Storyboard, and Workflow containers use 16:9
+with `object-fit: contain` — your image keeps its natural ratio; non-16:9
+images get black letterbox bars (cinematic, on-brand). Character images
+render at full width with no fixed ratio — they show whole at any aspect.
 
 ### Per-film frontmatter to update
 

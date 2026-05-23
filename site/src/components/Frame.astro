@@ -24,7 +24,7 @@ const { image, caption, number } = Astro.props;
     overflow: hidden;
     background: #1a1a1a;
   }
-  .frame :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .frame :global(img) { width: 100%; height: 100%; object-fit: contain; }
   .frame-num {
     position: absolute;
     top: 8px;

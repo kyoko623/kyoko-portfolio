@@ -12,37 +12,63 @@ const { name, image } = Astro.props;
 
 <section class="character page-pad">
   <div class="character-image">
-    <Image src={image} alt={name} widths={[480, 960, 1440]} sizes="(min-width: 1024px) 40vw, 100vw" />
+    <Image src={image} alt={name} widths={[960, 1440, 1920, 2560]} sizes="(min-width: 1024px) 1100px, 100vw" />
   </div>
-  <div class="character-text">
+  <div class="character-text measure">
     <h3 class="h-card name">{name}</h3>
     <div class="body"><slot /></div>
   </div>
 </section>
 
 <style>
+  /* Full-width image stacked above centered prose. The image is shown
+     at its natural aspect ratio (no fixed crop) so 16:9 film stills,
+     2:3 portraits, or 21:9 wide shots all render whole. */
   .character {
-    display: grid;
-    grid-template-columns: 1fr 1.5fr;
-    gap: 32px;
-    padding-top: 32px;
-    padding-bottom: 32px;
-    align-items: start;
+    padding-top: 48px;
+    padding-bottom: 48px;
+    text-align: center;
   }
   .character-image {
-    aspect-ratio: 3 / 4;
+    margin-bottom: 32px;
     overflow: hidden;
+    background: var(--bg);
   }
-  .character-image :global(img) { width: 100%; height: 100%; object-fit: cover; }
-  .name { font-size: clamp(24px, 4vw, 32px); margin-bottom: 16px; }
-  .body :global(h3) { font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin: 20px 0 8px; font-weight: 500; }
-  .body :global(h4) { font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin: 20px 0 8px; font-weight: 500; }
+  .character-image :global(img) {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-inline: auto;
+  }
+  .character-text {
+    text-align: left;
+  }
+  .name {
+    font-size: clamp(28px, 5vw, 40px);
+    margin-bottom: 24px;
+    text-align: center;
+  }
+  .body :global(h3),
+  .body :global(h4) {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    margin: 24px 0 10px;
+    font-weight: 500;
+  }
   .body :global(ul) { list-style: none; padding: 0; }
-  .body :global(li) { font-size: 14px; line-height: 1.6; padding: 4px 0; border-bottom: 1px solid #222; }
+  .body :global(li) {
+    font-size: 15px;
+    line-height: 1.7;
+    padding: 6px 0;
+    border-bottom: 1px solid #222;
+  }
   .body :global(li strong) { color: var(--text); }
   .body :global(li ul) { margin-top: 4px; margin-left: 16px; }
-  .body :global(li li) { border-bottom: none; padding: 2px 0; color: #ccc; }
-  @media (max-width: 768px) {
-    .character { grid-template-columns: 1fr; gap: 16px; }
+  .body :global(li li) {
+    border-bottom: none;
+    padding: 2px 0;
+    color: #ccc;
   }
 </style>
