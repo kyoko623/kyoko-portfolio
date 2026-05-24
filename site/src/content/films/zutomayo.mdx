@@ -2,13 +2,13 @@
 title: zutomayo
 year: 2026
 duration: "14:32"
-tagline: "On reconstructed memory — a man returns to a city that no longer exists, built only from the residue of dreams."
+tagline: "A neon study in urban solitude — a girl who has forgotten how to be awake in the daytime, and the 3 a.m. city that keeps her company."
 order: 2
 cover: ./zutomayo/assets/cover.jpg
 heroImage: ./zutomayo/assets/hero.jpg
 vimeoId: "76979871"
 tapnow:
-  link: "https://tapnow.ai/p/example"
+  link: "https://app.tapnow.ai/#/tapflow/view/5306439d"
   screenshots:
     - ./zutomayo/assets/workflow/01.png
     - ./zutomayo/assets/workflow/02.png
@@ -20,7 +20,7 @@ import Character from '../../components/Character.astro';
 import Storyboard from '../../components/Storyboard.astro';
 import Frame from '../../components/Frame.astro';
 
-import wandererImg from './zutomayo/assets/characters/wanderer.jpg';
+import mayoImg from './zutomayo/assets/characters/wanderer.jpg';
 import sb01 from './zutomayo/assets/storyboard/01.jpg';
 import sb02 from './zutomayo/assets/storyboard/02.jpg';
 import sb03 from './zutomayo/assets/storyboard/03.jpg';
@@ -33,36 +33,65 @@ import dc03 from './zutomayo/assets/discarded/03.png';
 
 ## Core
 
-This film begins with the residue of a dream. The protagonist returns at 40
-to the small city of his birth and finds it long since flattened — yet
-memory remains whole, carrying light, the damp summer air at street corners,
-the buzz of cicadas.
+真夜中(Mayo-naka)— "the middle of the night" — is a portrait of a girl
+who has forgotten how to be awake in the daytime. Mayo is 18, lives alone,
+works a remote job that requires no face. Her days have been compressed
+into two activities: **waiting for the dark**, and **passing time inside it**.
 
-> "What if the only thing left of a place is the way it once held light?"
+> "和人说话是一件需要预热三十分钟的事,而她常常在第二十八分钟决定算了。"
 
-The entire film works with how synthetic imagery can *reconstruct* what no
-longer exists. AI here isn't for reproducing the real, but for touching the
-parts of the real that only memory can still hold whole.
+This film is a study of urban solitude in the ZUTOMAYO key — neon, CRT
+scan lines, the hum of a 24-hour konbini at 3 a.m. AI here doesn't paint
+a realistic girl; it paints the *feeling* of being lit by screens, of
+looking at the world through one earphone while leaving the other ear
+"for the world." Every frame obeys a single rule: no daylight, ever.
 
 ## Characters
 
-<Character name="主角 · The Wanderer" image={wandererImg}>
+<Character name="真夜 · Mayo" image={mayoImg}>
 
-### 主角形象
+### 角色概况
 
-- **国籍 / 气质**:日本男性,40 岁左右,成熟绅士,眼神有历经
-- **外貌**:
-  - 蓬松凌乱有质感的黑色卷发
-  - 修剪得当的胡须
-  - 深邃略带忧郁的眼神
-  - 紧致的下颌线
-  - 温润橄榄色皮肤
-  - 介于「日本电影演员」与「艺术家」之间的气质
+- **代号**:真夜(Mayo) / MAYO-22
+- **性别 / 年龄**:女 / 视觉 17–19 岁
+- **身份**:都市夜归人 · 失眠便利店常客 · 独居公寓的「夜行性生物」
+- **Logline**:不想被叫醒,也不想叫醒任何人。
 
-### 服装
+### 面部 · 灵魂
 
-- 两件套西装(上衣 + 西裤),现代主流剪裁
-- 炭黑色羊毛西装 + 白衬衫 + 深蓝色窄领带
+整张脸的灵魂在眼睛 —— ZUTOMAYO 美学最核心的视觉签名。
+
+- **眼型**:上眼睑低垂的「半眯眼 / jitome」,眼尾微下垂 ——「看见了,但懒得反应」
+- **瞳色**:淡紫粉(#D9A8E8)到品红(#E84B9C)渐变 + 橙黄色高光点(#FFB84D)
+- **眉**:极细、平直、略下垂,比头发深一度
+- **嘴**:永远闭着的小三角或一字唇,几乎不露齿
+- **肤色**:冷调淡紫粉(#F2D8E8)——「被屏幕的光照着」
+
+### 头发
+
+- 齐刘海(眉上 1cm,平剪)+ 及肩齐切 bob,发尾平直
+- 底色深紫黑(#1A0E2E),内层挑染品红(#E91E8E)到霓虹紫(#A040E0)
+- 哑光质感,发丝以 3–5 根成束概括,不画细碎飞发
+
+### 服装(三套核心 look)
+
+- **日常套**:Oversized 紫灰色(#9B8AB5)针织衫 + 黑短裙 + 黑厚底皮鞋 / 白袜
+- **外出套**:灰色印花 T(前胸荧光绿小色块)+ 黑色百褶短裙 + 霓虹绿/紫拼色厚底运动鞋
+- **内搭套**:纯紫色(#7B4FA8)oversized 卫衣或同色无袖连衣裙 + 黑色 choker
+
+### 配饰
+
+- 左耳一只长条状粉紫耳坠(闪电形 / 长方形),右耳留空或一颗小钉
+- 黑色细 choker,正中嵌一颗紫色小石或金属铆钉
+- 白色有线耳机,只戴一只 ——「留一只耳朵给世界」
+
+### 性格关键词
+
+1. **倦怠(kedaru-i)**—— 不是抑郁,是「什么都还可以,但不是现在」的延期主义
+2. **观察者人格** —— 比她表现出的更敏锐,能注意到别人衣服上的猫毛
+3. **温柔的疏离** —— 会让座、会道谢、会对小狗微笑,但绝不留联系方式
+4. **物品依恋 > 人际依恋** —— 会给杯子取名字,但不记得同事的姓
+5. **夜行性创造力** —— 灵感和食欲只在 23:00–04:00 之间在线
 
 </Character>
 
