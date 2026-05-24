@@ -12,6 +12,14 @@ const films = defineCollection({
       heroImage: image().optional(),
       vimeoId: z.string(),
       vimeoHash: z.string().optional(),
+      /** Aspect ratio of the Vimeo video — e.g. "16 / 9" (default) for
+       *  standard widescreen, "21 / 9" for cinematic 2.39:1. Controls
+       *  the iframe aspect-ratio so the player matches the video and
+       *  there's no letterboxing. */
+      videoAspect: z
+        .string()
+        .regex(/^\d+\s*\/\s*\d+$/, 'videoAspect must be like "16 / 9" or "21/9"')
+        .default('16 / 9'),
       tapnow: z.object({
         link: z.string().url(),
         screenshots: z.array(image()).min(1),

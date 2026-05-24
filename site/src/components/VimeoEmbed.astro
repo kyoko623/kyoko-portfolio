@@ -3,9 +3,13 @@ interface Props {
   vimeoId: string;
   vimeoHash?: string;
   title?: string;
+  /** CSS aspect-ratio value, e.g. "16 / 9" or "21 / 9". Pass the
+   *  real video ratio so the iframe matches it — otherwise the
+   *  player letterboxes (Vimeo's letterbox can read as white).  */
+  aspect?: string;
 }
 
-const { vimeoId, vimeoHash, title = 'Vimeo player' } = Astro.props;
+const { vimeoId, vimeoHash, title = 'Vimeo player', aspect = '16 / 9' } = Astro.props;
 
 const params = new URLSearchParams({
   color: 'ffffff',
@@ -21,7 +25,7 @@ const src = `https://player.vimeo.com/video/${encodeURIComponent(vimeoId)}?${par
 ---
 
 <div class="vimeo-wrap page-pad">
-  <div class="vimeo-frame">
+  <div class="vimeo-frame" style={`aspect-ratio: ${aspect};`}>
     <iframe
       src={src}
       title={title}
@@ -40,11 +44,11 @@ const src = `https://player.vimeo.com/video/${encodeURIComponent(vimeoId)}?${par
     background: var(--bg);
   }
   .vimeo-frame {
-    aspect-ratio: 16 / 9;
+    /* aspect-ratio set inline via the `aspect` prop so each film can
+       use its real video ratio (16:9, 21:9 cinematic, etc.) and the
+       player has no letterboxing. */
     overflow: hidden;
     background: var(--bg);
-    /* No outline — the player sits flush on the page's black canvas.
-       (Previously was `1px solid var(--text)` = white hairline.) */
   }
   .vimeo-frame iframe {
     width: 100%;

@@ -63,7 +63,7 @@ const pageDescription = film.data.tagline;
   <SectionAnchor label="① Watch" anchor="#video" />
   <section id="video" class="watch-section divider-bottom">
     <h2 class="h-section stitle">Watch.</h2>
-    <VimeoEmbed vimeoId={film.data.vimeoId} vimeoHash={film.data.vimeoHash} title={film.data.title} />
+    <VimeoEmbed vimeoId={film.data.vimeoId} vimeoHash={film.data.vimeoHash} aspect={film.data.videoAspect} title={film.data.title} />
   </section>
 
   {/* MDX BODY — Core / Characters / Storyboard headings rendered through the MDX content */}
