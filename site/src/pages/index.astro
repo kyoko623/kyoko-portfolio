@@ -51,12 +51,12 @@ const { Content: AboutContent } = await render(aboutEntry);
   {/* ABOUT */}
   <section id="info" class="about divider-top page-pad">
     <h2 class="h-section about-title">About.</h2>
-    <div class="measure about-body">
+    <div class="about-body">
       <AboutContent />
-      <div class="signoff">
-        <div class="signoff-label meta">— signed,</div>
-        <Signature variant="cursive" size="md" />
-      </div>
+    </div>
+    <div class="signoff">
+      <div class="signoff-label meta">— signed,</div>
+      <Signature variant="cursive" size="md" />
     </div>
   </section>
 
@@ -131,14 +131,40 @@ const { Content: AboutContent } = await render(aboutEntry);
     color: var(--muted);
   }
 
-  /* About */
-  .about { padding-top: 64px; padding-bottom: 64px; text-align: center; }
-  .about-title { font-size: clamp(48px, 8vw, 72px); margin-bottom: 32px; }
-  .about-body { font-size: 16px; line-height: 1.7; text-align: left; }
-  .about-body :global(p) { margin-bottom: 16px; }
+  /* About — fully centered: section / title / prose / signoff */
+  .about {
+    padding-top: 96px;
+    padding-bottom: 96px;
+    text-align: center;
+  }
+  .about-title {
+    font-size: clamp(48px, 8vw, 72px);
+    margin-bottom: 48px;
+  }
+  .about-body {
+    max-width: 52ch;
+    margin: 0 auto;
+    font-size: 17px;
+    line-height: 1.8;
+    text-align: center;
+  }
+  .about-body :global(p) { margin-bottom: 20px; }
+  .about-body :global(p:last-child) { margin-bottom: 0; }
 
-  .signoff { margin-top: 32px; text-align: center; }
-  .signoff-label { display: block; margin-bottom: 4px; }
+  .signoff {
+    margin-top: 64px;
+    text-align: center;
+  }
+  .signoff-label {
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  @media (max-width: 640px) {
+    .about { padding-top: 64px; padding-bottom: 64px; }
+    .about-title { margin-bottom: 32px; }
+    .signoff { margin-top: 48px; }
+  }
 
   /* Contact */
   .contact { padding-top: 64px; padding-bottom: 64px; text-align: center; }
