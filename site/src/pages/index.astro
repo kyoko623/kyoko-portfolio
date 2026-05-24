@@ -24,19 +24,20 @@ const { Content: AboutContent } = await render(aboutEntry);
 <BaseLayout title={SITE_META.siteTitle} description={SITE_META.siteDescription} canonicalPath="/">
   <Header />
 
-  {/* HERO */}
+  {/* HERO — signature owns the full first viewport, centered in black */}
   <section class="hero page-pad">
     <div class="hero-big">
       <Signature variant="block" />
       <p class="hero-sub meta meta-light">{SITE_META.heroSubLabel}</p>
     </div>
-
-    <div class="index-hero-image">
-      <Image src={indexHeroImg} alt="" widths={[1280, 1920, 2048]} sizes="100vw" />
-    </div>
     <div class="index-hero-cta">
       <a href="#works">Works ↓</a>
     </div>
+  </section>
+
+  {/* DECORATIVE — the workshop photo, full-bleed, follows the hero */}
+  <section class="hero-photo">
+    <Image src={indexHeroImg} alt="" widths={[1280, 1920, 2048]} sizes="100vw" />
   </section>
 
   {/* WORKS */}
@@ -73,7 +74,11 @@ const { Content: AboutContent } = await render(aboutEntry);
 </BaseLayout>
 
 <style>
-  /* Hero */
+  /* Hero — signature owns the full first viewport. The .hero-big block
+     is flex:1 inside a 100vh column, so the signature is vertically
+     centred between the header and the Works ↓ CTA. The decorative
+     image lives OUTSIDE this section now (in .hero-photo below), so
+     the signature gets the entire black canvas to breathe in. */
   .hero {
     min-height: 100vh;
     display: flex;
@@ -92,15 +97,6 @@ const { Content: AboutContent } = await render(aboutEntry);
   }
   .hero-sub { margin-top: 16px; }
 
-  /* Decorative hero image — rendered at natural aspect ratio, no link. */
-  .index-hero-image {
-    padding-top: 24px;
-  }
-  .index-hero-image :global(img) {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
   .index-hero-cta {
     text-align: center;
     padding: 20px 0 4px;
@@ -117,6 +113,14 @@ const { Content: AboutContent } = await render(aboutEntry);
   .index-hero-cta a:hover {
     color: var(--text);
     background: transparent;
+  }
+
+  /* Decorative full-bleed photo — its own section now, follows the
+     hero in document order. Rendered at natural aspect ratio. */
+  .hero-photo :global(img) {
+    width: 100%;
+    height: auto;
+    display: block;
   }
 
   /* Section anchor reuse */
