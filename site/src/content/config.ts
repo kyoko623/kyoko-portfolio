@@ -6,7 +6,6 @@ const films = defineCollection({
     z.object({
       title: z.string(),
       year: z.string().regex(/^\d{4}(\.\d{1,2})?$/, 'year must be YYYY or YYYY.M (e.g. "2026" or "2026.4")'),
-      duration: z.string().regex(/^\d+:\d{2}$/, 'duration must be MM:SS'),
       tagline: z.string(),
       order: z.number().int(),
       cover: image(),
