@@ -9,7 +9,7 @@ interface Props {
 }
 
 const { film } = Astro.props;
-const { title, year, duration, cover, status } = film.data;
+const { title, year, cover, status } = film.data;
 const href = `/films/${slugOf(film)}/`;
 ---
 
@@ -21,8 +21,6 @@ const href = `/films/${slugOf(film)}/`;
   <h2 class="h-section title">{title}</h2>
   <div class="meta">
     <span>{year}</span>
-    <span class="dot">·</span>
-    <span>{duration}</span>
     <span class="dot">·</span>
     <span>View →</span>
   </div>
@@ -42,17 +40,19 @@ const href = `/films/${slugOf(film)}/`;
     color: var(--bg);
     text-decoration: none;
   }
+  /* Cover renders at each film's natural aspect ratio.
+     Astro Image emits width/height on the <img>, so the browser computes
+     the intrinsic ratio and reserves layout space — no CLS on load. */
   .cover {
-    aspect-ratio: 16 / 9;
     overflow: hidden;
     margin-bottom: 16px;
     background: var(--bg);
     position: relative;
   }
   .cover :global(img) {
+    display: block;
     width: 100%;
-    height: 100%;
-    object-fit: contain;
+    height: auto;
   }
   .status-pin {
     position: absolute;
