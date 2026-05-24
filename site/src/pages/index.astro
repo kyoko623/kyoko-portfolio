@@ -7,11 +7,11 @@ import Footer from '../components/Footer.astro';
 import Signature from '../components/Signature.astro';
 import FilmCard from '../components/FilmCard.astro';
 import { SITE_META } from '../content/site/meta';
-import { sortFilms, filterPublished, slugOf } from '../lib/films';
+import { sortFilms, filterPublished } from '../lib/films';
+import indexHeroImg from '../assets/index.hero.png';
 
 const allFilms = await getCollection('films');
 const films = sortFilms(filterPublished(allFilms));
-const firstFilm = films[0];
 
 // Astro 6 + legacy.collectionsBackwardsCompat exposes ids with the file
 // extension (e.g. 'about.mdx'); look up by the bare slug across both forms.
@@ -31,20 +31,12 @@ const { Content: AboutContent } = await render(aboutEntry);
       <p class="hero-sub meta meta-light">{SITE_META.heroSubLabel}</p>
     </div>
 
-    {firstFilm && (
-      <div class="hero-peek">
-        <div class="peek-row">
-          <div class="peek-year"><span class="tag-square" aria-hidden="true"></span>{firstFilm.data.year}</div>
-          <div class="peek-label">{firstFilm.data.title}, AIGC Short Film</div>
-          <div class="peek-more"><a href="#works">More →</a></div>
-        </div>
-        <a class="peek-image" href={`/films/${slugOf(firstFilm)}/`}>
-          <span class="m tl"></span><span class="m tr"></span>
-          <span class="m bl"></span><span class="m br"></span>
-          <Image src={firstFilm.data.heroImage ?? firstFilm.data.cover} alt={`${firstFilm.data.title} — peek`} widths={[640, 1280, 1920]} sizes="100vw" />
-        </a>
-      </div>
-    )}
+    <div class="index-hero-image">
+      <Image src={indexHeroImg} alt="" widths={[1280, 1920, 2048]} sizes="100vw" />
+    </div>
+    <div class="index-hero-cta">
+      <a href="#works">Works ↓</a>
+    </div>
   </section>
 
   {/* WORKS */}
@@ -100,33 +92,32 @@ const { Content: AboutContent } = await render(aboutEntry);
   }
   .hero-sub { margin-top: 16px; }
 
-  .hero-peek { padding-top: 24px; }
-  .peek-row {
-    display: grid;
-    grid-template-columns: 1fr 1.5fr 1fr;
-    gap: 16px;
+  /* Decorative hero image — rendered at natural aspect ratio, no link. */
+  .index-hero-image {
+    padding-top: 24px;
+  }
+  .index-hero-image :global(img) {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .index-hero-cta {
+    text-align: center;
+    padding: 20px 0 4px;
     font-size: 11px;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 12px;
+    letter-spacing: 0.18em;
   }
-  .peek-year { display: flex; align-items: center; gap: 6px; }
-  .peek-label { text-align: center; color: var(--muted); }
-  .peek-more { text-align: right; }
-  .tag-square { display: inline-block; width: 8px; height: 8px; background: var(--text); }
-
-  .peek-image {
-    display: block;
-    position: relative;
-    aspect-ratio: 16 / 5;       /* shows only top portion */
-    overflow: hidden;
+  .index-hero-cta a {
+    color: var(--muted);
+    text-decoration: none;
+    background: transparent;
+    transition: color 180ms ease;
   }
-  .peek-image :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
-  .peek-image .m { position: absolute; width: 8px; height: 8px; background: var(--text); }
-  .peek-image .tl { top: 8px; left: 8px; }
-  .peek-image .tr { top: 8px; right: 8px; }
-  .peek-image .bl { bottom: 8px; left: 8px; }
-  .peek-image .br { bottom: 8px; right: 8px; }
+  .index-hero-cta a:hover {
+    color: var(--text);
+    background: transparent;
+  }
 
   /* Section anchor reuse */
   .section-anchor {
