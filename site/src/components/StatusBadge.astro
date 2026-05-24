@@ -1,7 +1,13 @@
 ---
 /**
- * Tiny status pill, brand-styled. Pure black & white — distinction is
- * label text + (for discarded) strikethrough text-decoration.
+ * Hospital signal-light style status badge.
+ *
+ * Three states map to three lamp colours (MRI / X-ray door indicator):
+ *   - in-progress → amber, gently pulsing (machine running)
+ *   - discarded   → scarlet, steady (room shut)
+ *   - completed   → green, steady (done / safe)
+ *
+ * The pulse respects `prefers-reduced-motion`.
  */
 type Status = 'discarded' | 'in-progress' | 'completed';
 
@@ -13,19 +19,26 @@ interface Props {
 const { status, class: className = '' } = Astro.props;
 
 const LABELS: Record<Status, string> = {
-  discarded: '[ DISCARDED · 废案 ]',
-  'in-progress': '[ IN PROGRESS · 进行中 ]',
-  completed: '[ COMPLETED · 已完成 ]',
+  discarded: 'DISCARDED · 废案',
+  'in-progress': 'IN PROGRESS · 进行中',
+  completed: 'COMPLETED · 已完成',
 };
 
 const label = LABELS[status];
 ---
 
-<span class:list={['status', `status--${status}`, className]}>{label}</span>
+<span class:list={['status', `status--${status}`, className]} role="status">
+  <span class="lamp" aria-hidden="true"></span>
+  <span class="label">{label}</span>
+</span>
 
 <style>
   .status {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    border: 1px solid color-mix(in srgb, var(--lamp-color, #888) 50%, transparent);
     font-size: 10px;
     font-weight: 500;
     text-transform: uppercase;
@@ -33,9 +46,48 @@ const label = LABELS[status];
     color: var(--text);
     line-height: 1;
   }
-  /* Discarded gets strikethrough to telegraph "this was shelved" */
-  .status--discarded {
-    text-decoration: line-through;
-    opacity: 0.7;
+
+  .lamp {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--lamp-color);
+    box-shadow:
+      0 0 4px var(--lamp-color),
+      0 0 10px color-mix(in srgb, var(--lamp-color) 60%, transparent);
+    flex-shrink: 0;
+  }
+
+  /* Lamp colour per state — hospital signal-light vocabulary */
+  .status--in-progress { --lamp-color: #ffb84d; }   /* amber  · active */
+  .status--discarded   { --lamp-color: #e03333; }   /* scarlet · shut */
+  .status--completed   { --lamp-color: #3ddc84; }   /* green   · done */
+
+  /* Active state pulses — the cue that something is running */
+  .status--in-progress .lamp {
+    animation: lamp-pulse 1.8s ease-in-out infinite;
+  }
+
+  @keyframes lamp-pulse {
+    0%, 100% {
+      box-shadow:
+        0 0 4px var(--lamp-color),
+        0 0 10px color-mix(in srgb, var(--lamp-color) 60%, transparent);
+      opacity: 1;
+    }
+    50% {
+      box-shadow:
+        0 0 2px var(--lamp-color),
+        0 0 5px color-mix(in srgb, var(--lamp-color) 35%, transparent);
+      opacity: 0.6;
+    }
+  }
+
+  /* Discarded — light steady, label slightly dim (room is closed) */
+  .status--discarded .label { opacity: 0.78; }
+
+  /* Honour the user's motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    .status--in-progress .lamp { animation: none; }
   }
 </style>
