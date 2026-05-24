@@ -120,31 +120,54 @@ const pageDescription = film.data.tagline;
 
   .stitle { text-align: center; font-size: clamp(40px, 7vw, 56px); margin: 32px 0; }
 
-  /* MDX content styles */
+  /* MDX content styles — Core prose is centered to harmonise with About */
   .film-body :global(h2) {
     text-align: center;
     font-size: clamp(40px, 7vw, 56px);
     font-weight: 900;
     letter-spacing: -0.04em;
     line-height: 0.95;
-    margin: 48px 0 32px;
+    margin: 64px 0 40px;
   }
   .film-body :global(p) {
-    max-width: var(--max-content);
-    margin: 0 auto 16px;
+    max-width: 52ch;
+    margin: 0 auto 20px;
     padding: 0 var(--pad-x);
     font-size: 17px;
-    line-height: 1.7;
+    line-height: 1.8;
+    text-align: center;
   }
+
+  /* Blockquote — centered italic with thin em-dash rules framing it */
   .film-body :global(blockquote) {
-    max-width: var(--max-content);
-    margin: 24px auto;
+    max-width: 48ch;
+    margin: 48px auto;
     padding: 0 var(--pad-x);
-    border-left: 2px solid var(--text);
-    padding-left: 24px;
+    text-align: center;
     font-style: italic;
-    font-size: 22px;
-    line-height: 1.4;
+    font-size: clamp(20px, 2.6vw, 26px);
+    line-height: 1.5;
+  }
+  .film-body :global(blockquote)::before,
+  .film-body :global(blockquote)::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--text);
+    margin: 20px auto;
+    opacity: 0.6;
+  }
+  .film-body :global(blockquote) :global(p) {
+    /* Override outer .film-body p rules — the quote's own paragraphs
+       should not double-pad or limit width beyond the blockquote */
+    max-width: none;
+    padding: 0;
+    margin: 0;
+    font-size: inherit;
+    line-height: inherit;
+    text-align: inherit;
+    font-style: inherit;
   }
 
   .director { text-align: center; padding-top: 64px; padding-bottom: 64px; }
