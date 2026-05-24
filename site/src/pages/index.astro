@@ -24,21 +24,22 @@ const { Content: AboutContent } = await render(aboutEntry);
 <BaseLayout title={SITE_META.siteTitle} description={SITE_META.siteDescription} canonicalPath="/">
   <Header />
 
-  {/* HERO — signature owns the full first viewport, centered in black */}
+  {/* HERO — signature + sub-label, restrained black canvas, no CTA */}
   <section class="hero page-pad">
-    <div class="hero-big">
-      <Signature variant="block" />
-      <p class="hero-sub meta meta-light">{SITE_META.heroSubLabel}</p>
-    </div>
-    <div class="index-hero-cta">
-      <a href="#works">Works ↓</a>
-    </div>
+    <Signature variant="block" />
+    <p class="hero-sub meta meta-light">{SITE_META.heroSubLabel}</p>
   </section>
 
-  {/* DECORATIVE — the workshop photo, full-bleed, follows the hero */}
+  {/* DECORATIVE — the workshop photo. NOT a work — pure decoration. */}
   <section class="hero-photo">
     <Image src={indexHeroImg} alt="" widths={[1280, 1920, 2048]} sizes="100vw" />
   </section>
+
+  {/* Works ↓ CTA sits between the decorative photo and the index so
+      it's unambiguous which side is the gallery */}
+  <div class="scroll-cta">
+    <a href="#works">Works ↓</a>
+  </div>
 
   {/* WORKS */}
   <section id="works">
@@ -74,43 +75,42 @@ const { Content: AboutContent } = await render(aboutEntry);
 </BaseLayout>
 
 <style>
-  /* Hero — signature owns the full first viewport. The .hero-big block
-     is flex:1 inside a 100vh column, so the signature is vertically
-     centred between the header and the Works ↓ CTA. The decorative
-     image lives OUTSIDE this section now (in .hero-photo below), so
-     the signature gets the entire black canvas to breathe in. */
+  /* Hero — signature + sub-label, centred in a restrained black canvas.
+     65vh gives space without being gratuitous. The decorative photo
+     and the Works ↓ CTA live OUTSIDE this section. */
   .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    padding-top: 16px;
-    padding-bottom: 16px;
-  }
-  .hero-big {
-    flex: 1;
+    min-height: 65vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 24px;
-    padding: 24px 0;
+    padding-top: 32px;
+    padding-bottom: 32px;
   }
-  .hero-sub { margin-top: 16px; }
+  /* Sub-label overrides .meta's 11px — slightly larger reads as a
+     deliberate pair with the now-tighter signature ink. */
+  .hero-sub {
+    font-size: 13px;
+    letter-spacing: 0.14em;
+  }
 
-  .index-hero-cta {
+  /* Works ↓ scroll cue — sits between the decorative photo and the
+     gallery, so the photo above it isn't mistaken for a work. */
+  .scroll-cta {
     text-align: center;
-    padding: 20px 0 4px;
+    padding: 32px 0;
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.18em;
   }
-  .index-hero-cta a {
+  .scroll-cta a {
     color: var(--muted);
     text-decoration: none;
     background: transparent;
     transition: color 180ms ease;
   }
-  .index-hero-cta a:hover {
+  .scroll-cta a:hover {
     color: var(--text);
     background: transparent;
   }
