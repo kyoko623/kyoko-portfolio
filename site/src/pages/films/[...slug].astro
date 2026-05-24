@@ -8,6 +8,7 @@ import Signature from '../../components/Signature.astro';
 import SectionAnchor from '../../components/SectionAnchor.astro';
 import WorkflowGallery from '../../components/WorkflowGallery.astro';
 import VimeoEmbed from '../../components/VimeoEmbed.astro';
+import StatusBadge from '../../components/StatusBadge.astro';
 import { sortFilms, filterPublished, slugOf } from '../../lib/films';
 import { SITE_META } from '../../content/site/meta';
 
@@ -46,6 +47,7 @@ const pageDescription = film.data.tagline;
   {/* HERO */}
   <section class="film-hero divider-bottom page-pad">
     <div class="meta-line meta">{film.data.year} · {film.data.duration} · AIGC Short Film</div>
+    <div class="hero-status"><StatusBadge status={film.data.status} /></div>
     <h1 class="h-display title">{film.data.title}</h1>
     <p class="tagline">{film.data.tagline}</p>
     {film.data.heroImage && (
@@ -98,7 +100,8 @@ const pageDescription = film.data.tagline;
 
 <style>
   .film-hero { text-align: center; padding-top: 48px; padding-bottom: 32px; }
-  .meta-line { margin-bottom: 16px; display: block; }
+  .meta-line { margin-bottom: 8px; display: block; }
+  .hero-status { margin-bottom: 16px; }
   .title { font-size: clamp(56px, 12vw, 160px); margin-bottom: 16px; }
   .tagline { font-size: clamp(15px, 2vw, 18px); font-style: italic; color: #ccc; max-width: 50ch; margin: 0 auto; }
   .hero-image {

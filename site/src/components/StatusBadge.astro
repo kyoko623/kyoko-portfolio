@@ -1,0 +1,41 @@
+---
+/**
+ * Tiny status pill, brand-styled. Pure black & white — distinction is
+ * label text + (for discarded) strikethrough text-decoration.
+ */
+type Status = 'discarded' | 'in-progress' | 'completed';
+
+interface Props {
+  status: Status;
+  class?: string;
+}
+
+const { status, class: className = '' } = Astro.props;
+
+const LABELS: Record<Status, string> = {
+  discarded: '[ DISCARDED · 废案 ]',
+  'in-progress': '[ IN PROGRESS · 进行中 ]',
+  completed: '[ COMPLETED · 已完成 ]',
+};
+
+const label = LABELS[status];
+---
+
+<span class:list={['status', `status--${status}`, className]}>{label}</span>
+
+<style>
+  .status {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text);
+    line-height: 1;
+  }
+  /* Discarded gets strikethrough to telegraph "this was shelved" */
+  .status--discarded {
+    text-decoration: line-through;
+    opacity: 0.7;
+  }
+</style>

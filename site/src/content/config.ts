@@ -17,6 +17,7 @@ const films = defineCollection({
         link: z.string().url(),
         screenshots: z.array(image()).min(1),
       }),
+      status: z.enum(['discarded', 'in-progress', 'completed']).default('in-progress'),
       draft: z.boolean().default(false),
     }),
 });
