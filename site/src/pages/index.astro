@@ -41,7 +41,7 @@ const { Content: AboutContent } = await render(aboutEntry);
         <a class="peek-image" href={`/films/${slugOf(firstFilm)}/`}>
           <span class="m tl"></span><span class="m tr"></span>
           <span class="m bl"></span><span class="m br"></span>
-          <Image src={firstFilm.data.cover} alt={`${firstFilm.data.title} — peek`} widths={[640, 1280, 1920]} sizes="100vw" />
+          <Image src={firstFilm.data.heroImage ?? firstFilm.data.cover} alt={`${firstFilm.data.title} — peek`} widths={[640, 1280, 1920]} sizes="100vw" />
         </a>
       </div>
     )}
