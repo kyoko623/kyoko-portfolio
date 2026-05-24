@@ -59,24 +59,24 @@ const pageDescription = film.data.tagline;
     )}
   </section>
 
+  {/* WATCH — placed immediately after Hero so visitors can see the film first */}
+  <SectionAnchor label="① Watch" anchor="#video" />
+  <section id="video" class="watch-section divider-bottom">
+    <h2 class="h-section stitle">Watch.</h2>
+    <VimeoEmbed vimeoId={film.data.vimeoId} vimeoHash={film.data.vimeoHash} title={film.data.title} />
+  </section>
+
   {/* MDX BODY — Core / Characters / Storyboard headings rendered through the MDX content */}
   <article class="film-body">
-    <SectionAnchor label="① Core" anchor="#core" />
+    <SectionAnchor label="② Core" anchor="#core" />
     <Content />
   </article>
 
   {/* WORKFLOW */}
-  <SectionAnchor label="④ Workflow" anchor="#workflow" />
+  <SectionAnchor label="③ Workflow" anchor="#workflow" />
   <section id="workflow" class="workflow-section divider-bottom">
     <h2 class="h-section stitle">Workflow.</h2>
     <WorkflowGallery screenshots={film.data.tapnow.screenshots} link={film.data.tapnow.link} />
-  </section>
-
-  {/* WATCH */}
-  <SectionAnchor label="⑤ Watch" anchor="#video" />
-  <section id="video" class="watch-section divider-bottom">
-    <h2 class="h-section stitle">Watch.</h2>
-    <VimeoEmbed vimeoId={film.data.vimeoId} vimeoHash={film.data.vimeoHash} title={film.data.title} />
   </section>
 
   {/* DIRECTOR sign-off */}
