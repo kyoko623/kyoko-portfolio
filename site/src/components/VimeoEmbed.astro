@@ -34,12 +34,23 @@ const src = `https://player.vimeo.com/video/${encodeURIComponent(vimeoId)}?${par
 </div>
 
 <style>
-  .vimeo-wrap { padding-top: 32px; padding-bottom: 32px; }
-  .vimeo-frame {
-    aspect-ratio: 16 / 9;
-    border: 1px solid var(--text);
-    overflow: hidden;
+  .vimeo-wrap {
+    padding-top: 32px;
+    padding-bottom: 32px;
     background: var(--bg);
   }
-  .vimeo-frame iframe { width: 100%; height: 100%; border: 0; }
+  .vimeo-frame {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--bg);
+    /* No outline — the player sits flush on the page's black canvas.
+       (Previously was `1px solid var(--text)` = white hairline.) */
+  }
+  .vimeo-frame iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+    background: var(--bg);
+  }
 </style>
