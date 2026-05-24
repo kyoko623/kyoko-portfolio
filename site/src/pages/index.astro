@@ -24,8 +24,10 @@ const { Content: AboutContent } = await render(aboutEntry);
 <BaseLayout title={SITE_META.siteTitle} description={SITE_META.siteDescription} canonicalPath="/">
   <Header />
 
-  {/* HERO — signature + sub-label, restrained black canvas, no CTA */}
-  <section class="hero page-pad">
+  {/* HERO — signature spans the full viewport width (no page-pad on
+       this section) so the SVG can be as big as the screen. sub-label
+       gets its own inline padding so it doesn't kiss the edges. */}
+  <section class="hero">
     <Signature variant="block" />
     <p class="hero-sub meta meta-light">{SITE_META.heroSubLabel}</p>
   </section>
@@ -76,8 +78,9 @@ const { Content: AboutContent } = await render(aboutEntry);
 
 <style>
   /* Hero — signature + sub-label, centred in a restrained black canvas.
-     65vh gives space without being gratuitous. The decorative photo
-     and the Works ↓ CTA live OUTSIDE this section. */
+     No horizontal page-pad: the SVG signature spans full viewport
+     width. .hero-sub gets its own inline padding so it doesn't touch
+     the edges on narrow screens. */
   .hero {
     min-height: 65vh;
     display: flex;
@@ -85,14 +88,14 @@ const { Content: AboutContent } = await render(aboutEntry);
     align-items: center;
     justify-content: center;
     gap: 24px;
-    padding-top: 32px;
-    padding-bottom: 32px;
+    padding: 32px 0;
   }
   /* Sub-label overrides .meta's 11px — slightly larger reads as a
-     deliberate pair with the now-tighter signature ink. */
+     deliberate pair with the signature. */
   .hero-sub {
     font-size: 13px;
     letter-spacing: 0.14em;
+    padding-inline: var(--pad-x);
   }
 
   /* Works ↓ scroll cue — sits between the decorative photo and the
