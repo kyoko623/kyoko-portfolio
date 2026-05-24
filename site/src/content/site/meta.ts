@@ -8,7 +8,7 @@ export const SITE_META = {
   siteDescription:
     'An archive and display of AIGC short film work — script, characters, storyboard, workflow, and finished films, kept together as they were made.',
   heroSubLabel: '— AIGC Short Films · Archive & Display —',
-  topBarTagline: 'An Archive of AIGC Short Films · Est. 2024',
+  topBarTagline: 'An Archive of AIGC Short Films',
   startYear: 2024,
   contact: {
     email: 'kyouichizhang@outlook.com',
