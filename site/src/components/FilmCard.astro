@@ -16,10 +16,11 @@ const href = `/films/${slugOf(film)}/`;
 <a class="film-card divider-bottom" href={href}>
   <div class="cover">
     <Image src={cover} alt={`${title} — cover`} widths={[640, 1280, 1920]} sizes="(min-width: 1024px) 1100px, 100vw" />
-    <span class="status-pin"><StatusBadge status={status} /></span>
   </div>
   <h2 class="h-section title">{title}</h2>
   <div class="meta">
+    <StatusBadge status={status} />
+    <span class="dot">·</span>
     <span>{year}</span>
     <span class="dot">·</span>
     <span>View →</span>
@@ -47,24 +48,42 @@ const href = `/films/${slugOf(film)}/`;
     overflow: hidden;
     margin-bottom: 16px;
     background: var(--bg);
-    position: relative;
   }
   .cover :global(img) {
     display: block;
     width: 100%;
     height: auto;
   }
-  .status-pin {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    padding: 6px 10px;
-    background: rgba(0, 0, 0, 0.75);
-  }
   .title {
     font-size: clamp(40px, 6vw, 56px);
     margin-bottom: 12px;
   }
-  .meta { justify-content: center; display: flex; gap: 8px; }
+
+  /* Meta label-strip: status lamp + year + view, all in one quiet row.
+     Status was previously an overlay patch on the cover image — moved
+     here so the cover stays unobstructed. */
+  .meta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+    color: var(--muted);
+  }
   .meta .dot { opacity: 0.5; }
+
+  /* Strip the StatusBadge's own panel framing when it sits inline in
+     the meta row — keep only the lamp + label. The lamp colour is the
+     signal; no border or padding needed in this context. */
+  .meta :global(.status) {
+    padding: 0;
+    border: none;
+    font-size: inherit;
+  }
+  /* Surface tint so the badge text picks up the inverted hover colour
+     too (card flips bg ↔ text on hover). */
+  .meta :global(.status) { color: inherit; }
 </style>
