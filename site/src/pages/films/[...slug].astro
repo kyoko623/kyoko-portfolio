@@ -61,7 +61,7 @@ const pageDescription = film.data.tagline;
 
   {/* WATCH — placed immediately after Hero so visitors can see the film first */}
   <SectionAnchor label="① Watch" anchor="#video" />
-  <section id="video" class="watch-section">
+  <section id="video" class="watch-section divider-bottom">
     <h2 class="h-section stitle">Watch.</h2>
     <VimeoEmbed vimeoId={film.data.vimeoId} vimeoHash={film.data.vimeoHash} aspect={film.data.videoAspect} title={film.data.title} />
   </section>
@@ -74,7 +74,7 @@ const pageDescription = film.data.tagline;
 
   {/* WORKFLOW */}
   <SectionAnchor label="③ Workflow" anchor="#workflow" />
-  <section id="workflow" class="workflow-section">
+  <section id="workflow" class="workflow-section divider-bottom">
     <h2 class="h-section stitle">Workflow.</h2>
     <WorkflowGallery screenshots={film.data.tapnow.screenshots} link={film.data.tapnow.link} />
   </section>
