@@ -14,7 +14,7 @@ const { name, image } = Astro.props;
   <div class="character-image">
     <Image src={image} alt={name} widths={[960, 1440, 1920, 2560]} sizes="(min-width: 1024px) 1100px, 100vw" />
   </div>
-  <div class="character-text measure">
+  <div class="character-text">
     <h3 class="h-card name">{name}</h3>
     <div class="body"><slot /></div>
   </div>
@@ -40,7 +40,12 @@ const { name, image } = Astro.props;
     display: block;
     margin-inline: auto;
   }
+  /* Wider than prose measure (60ch) — character info reads as bullet lists
+     where a single dense line (e.g. "国籍 / 气质: …") can run ~50 CJK chars.
+     80ch lets that fit one line on desktop while still bounded for tablet. */
   .character-text {
+    max-width: 80ch;
+    margin-inline: auto;
     text-align: left;
   }
   .name {
